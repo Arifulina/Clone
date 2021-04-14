@@ -1,4 +1,7 @@
 body {
     background-color: gray;
-    font: bold;
+}
+p {
+    font-family: "Georgi", sans-serif;
+    color: red;
 }
