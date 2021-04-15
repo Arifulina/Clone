@@ -139,52 +139,53 @@ alert(`Остаток от деления a на b = ${a % b}`);
 /*****
 7. С помощью цикла for сформируйте строку '123456789' и запишите ее в переменную str.
 *****/
-const MAXLENGTHSTR = 50;
-let str = "";
-let symbol = "*";
-let flag = true;
+// const MAXLENGTHSTR = 50;
+// let str = "";
+// let symbol = "*";
+// let flag = true;
 
-let lengthStr = Number(prompt("Длина строки:"));
+// let lengthStr = Number(prompt("Длина строки:"));
 
-if (lengthStr.toString() != "NaN") {
-    if (lengthStr > 0 && lengthStr <= MAXLENGTHSTR) {
+// if (lengthStr.toString() != "NaN") {
+//     if (lengthStr > 0 && lengthStr <= MAXLENGTHSTR) {
 
-        let answerUser = confirm("Заполнять цифрами?");
+//         let answerUser = confirm("Заполнять цифрами?");
 
-        switch(answerUser) {
-            case true:  for (let i = 1; i <= lengthStr; i++) {
-                            str += i;
-                        }
-                        break;
-            case false: while(flag) {
-                            symbol = prompt("Укажите символ для заполнения строки:");
-                            if(symbol != null) {
-                                if(symbol.length == 1) {
-                                    for (let i = 1; i <= lengthStr; i++) {
-                                        str += symbol;
-                                    }
-                                    break;
-                                }
-                            }
-                            else {
-                                flag = false;
-                            }
-                        }
-                        break;
-        }
-        flag ? alert(`Результат:\n${str}`) : alert("Вы отменили!");
-    }
-    else if(lengthStr == "") {
-        alert(`Ошибка!!! Длина строки не должна быть пустой!`);
-    }
-    else {
-        alert(`Ошибка!!! Длина строки должна быть > 0 и <= ${MAXLENGTHSTR}`);
-    }
-}
-else {
-    alert("Ошибка!!! Длина строки должна быть числом!");
-}
+//         switch(answerUser) {
+//             case true:  for (let i = 1; i <= lengthStr; i++) {
+//                             str += i;
+//                         }
+//                         break;
+//             case false: while(flag) {
+//                             symbol = prompt("Укажите символ для заполнения строки:");
+//                             if(symbol != null) {
+//                                 if(symbol.length == 1) {
+//                                     for (let i = 1; i <= lengthStr; i++) {
+//                                         str += symbol;
+//                                     }
+//                                     break;
+//                                 }
+//                             }
+//                             else {
+//                                 flag = false;
+//                             }
+//                         }
+//                         break;
+//         }
+//         flag ? alert(`Результат:\n${str}`) : alert("Вы отменили!");
+//     }
+//     else if(lengthStr == "") {
+//         alert(`Ошибка!!! Длина строки не должна быть пустой!`);
+//     }
+//     else {
+//         alert(`Ошибка!!! Длина строки должна быть > 0 и <= ${MAXLENGTHSTR}`);
+//     }
+// }
+// else {
+//     alert("Ошибка!!! Длина строки должна быть числом!");
+// }
 
+/* 8.  */
 // let str = "Привет друзья!";
 // let resultStr = "";
 // for(let i = 0; i < str.length; i++) {
@@ -196,3 +197,31 @@ else {
 //     }
 // }
 // alert(resultStr);
+
+//9. Дан массив с элементами 'Привет, ', 'мир' и '!'.Необходимо вывести на экран фразу 'Привет, мир!'.
+
+// let mas = ["Привет, ", "мир", "!"];
+// let str = "";
+// for(let i = 0; i < mas.length; i++) {
+//     str += mas[i];
+// }
+// alert(str);
+
+
+let mas = [];
+let str = "";
+let countItems = +prompt("Кол-во элементов в массиве:");
+
+if (countItems > 0 && countItems <= 20) {
+    for (let i = 0; i < countItems; i++) {
+        mas[i] = Math.ceil(Math.random() * 10);
+    }
+    for (let index in mas) {
+        console.log(mas[index] + '\n');
+        str += mas[index] + '\n';
+    }
+    alert(str);
+}
+else {
+    console.log("Кол-во элементов в массиве должно быть > 0 и не больше 20!");
+}
