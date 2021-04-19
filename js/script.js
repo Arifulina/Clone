@@ -449,6 +449,43 @@ alert(`Остаток от деления a на b = ${a % b}`);
 // setParametrs();
 
 /*решение уравнения*/
+
+let inputParamA = document.getElementById("param_a");
+let inputParamB = document.getElementById("param_b");
+let inputParamC = document.getElementById("param_c");
+
+let divButtons = document.querySelector(".buttons");
+
+let paramA;
+let paramB;
+let paramC;
+let result;
+
+let btnCalc = document.getElementById("btn_calc");
+
+inputParamA.addEventListener("input", () => {
+    inputParamB.removeAttribute("disabled");
+    paramA = +inputParamA.value;
+})
+
+inputParamB.addEventListener("input", () => {
+    inputParamC.removeAttribute("disabled");
+    paramB = +inputParamB.value;
+})
+
+inputParamC.addEventListener("input", () => {
+    btnCalc.removeAttribute("disabled");
+    paramC = +inputParamC.value;
+})
+
+btnCalc.addEventListener("click", () => {
+    result = calcSolution(paramA, paramB, paramC);
+
+    let solution = document.createElement("p");
+    solution.innerHTML = result;
+    divButtons.append(solution);
+})
+
 // let params = setParametrs();
 // let solution;
 
