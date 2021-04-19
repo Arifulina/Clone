@@ -198,6 +198,31 @@ alert(`Остаток от деления a на b = ${a % b}`);
 // }
 // alert(resultStr);
 
+
+
+/*Задача № 8.
+Создайте переменную str и присвойте ей значение 'abcde'. Обращаясь к отдельным
+символам этой строки выведите на экран символ 'a', символ 'b', символ 'e'.*/
+
+// switch (confirm(`Задача № 8.\n` +
+// 				`Дано значение: «abcde».\n` +
+// 				`Вывести на экран символ «a», «b», «e» через переменную «str»?`)) {
+// 	case true:
+// 		let str = "abcde";
+// 		let flag = true;
+// 		for(let i = 0; i < str.length; i++) {
+// 			if(i == 0 || i == 1 || i == str.length - 1) {
+// 				flag = confirm(`Переменная «str» содержит значение «abcde»,\n` +
+// 								`в переменной «str[${i}]» находится символ «${str[i]}».`);
+// 				if(flag == false) {
+// 					break;
+// 				}
+// 			}
+// 		}
+// 	case false:
+// 		break;
+// }
+
 //9. Дан массив с элементами 'Привет, ', 'мир' и '!'.Необходимо вывести на экран фразу 'Привет, мир!'.
 
 // let mas = ["Привет, ", "мир", "!"];
@@ -208,20 +233,319 @@ alert(`Остаток от деления a на b = ${a % b}`);
 // alert(str);
 
 
-let mas = [];
-let str = "";
-let countItems = +prompt("Кол-во элементов в массиве:");
+// let mas = [];
+// let str = "";
+// let countItems = +prompt("Кол-во элементов в массиве:");
 
-if (countItems > 0 && countItems <= 20) {
-    for (let i = 0; i < countItems; i++) {
-        mas[i] = Math.ceil(Math.random() * 10);
-    }
-    for (let index in mas) {
-        console.log(mas[index] + '\n');
-        str += mas[index] + '\n';
-    }
-    alert(str);
+// if (countItems > 0 && countItems <= 20) {
+//     for (let i = 0; i < countItems; i++) {
+//         mas[i] = Math.ceil(Math.random() * 10);
+//     }
+//     for (let index in mas) {
+//         console.log(mas[index] + '\n');
+//         str += mas[index] + '\n';
+//     }
+//     alert(str);
+// }
+// else {
+//     console.log("Кол-во элементов в массиве должно быть > 0 и не больше 20!");
+// }
+
+/* 10. Даны два массива: ['a', 'b', 'c'] и [1, 2, 3]. Объедините их вместе.*/
+
+// let arrayOne = ['a', 'b', 'c'];
+// let arrayTwo = [1, 2, 3, 4, 5];
+// let arrayMix = [];
+
+// let str = "";
+// let i = 0;
+
+// for (let index in arrayOne) {
+//     arrayMix[i] = arrayOne[index];
+//     i++;
+// }
+// for (let index in arrayTwo) {
+//     arrayMix[i] = arrayTwo[index];
+//     i++;
+// }
+// for (let index in arrayMix) {
+//     str += arrayMix[index] + '\n';
+// }
+// alert(str);
+
+/*второй вариант решения 10.*/
+// let massLet = ['a', 'b', 'c'];
+// let massNum = [1, 2, 3];
+
+
+// for (let i = 0; i < massNum.length; i++) {
+
+//     massLet[massLet.length] = massNum[i];
+
+// }
+// alert(massLet);
+
+/*Задача № 10:*/
+// Даны два массива: ['a', 'b', 'c'] и [1, 2, 3]. Объедините их вместе.
+
+// let arr1 = ['a', 'b', 'c'];
+// let arr2 = [1, 2, 3];
+
+// switch (confirm(`Задача № 10.\n` +
+// 				`Даны два массива: arrAlphabet['a', 'b', 'c'] и arrNumeric[1, 2, 3].\n` +
+// 				`Объединить их вмете?`)) {
+// 	case true:
+// 		alert(`Новый масив содержит: [${arr1.concat(arr2)}]`);
+// 	case false:
+// 		break;
+// }
+
+
+/*Задача № 12.
+Напишите фрагмет кода который будет присваивать значение 7.5 переменной х, а затем
+переменным a и b будет присваивать значения вдвое и втрое (соответственно) большие
+значения переменной х. Вывести эти значения на экран.*/
+
+// switch (confirm(`Задача № 12.\n` +
+// 				`Переменная «x» = 7.5.\n` + `Присвоить переменным «a» и «b» ` +
+// 				`значения в 2-ое и в 3-ое больше значения переменной «x»?`)) {
+// 	case true:
+// 		let x = 7.5;
+// 		let a = Math.pow(x, 2);
+// 		let b = Math.pow(x, 3);
+// 		let flag = true;
+// 		while(flag == true) {
+// 			flag = confirm(`«a» = ${a};\n` + `«b» = ${b}.`);
+// 			if(flag == true) {
+// 				a += a;
+// 				b += b;
+// 			}
+// 			else {
+// 				break;
+// 			}
+// 		}
+// 	case false:
+// 		break;
+// }
+
+
+// let str1 = "ПРИВЕТ ";
+// let str2 = "друзья!";
+
+// alert(str1.substring(2, 5));
+// alert(str1.substr(3, 4));
+// alert(str1.indexOf("Р"));
+
+// let month = "";
+// let numberDate;
+// let dayWeek = "";
+
+// let date = new Date();
+
+// let arrayDays = {
+//     0: "воскресенье",
+//     1: "понедельник",
+//     2: "вторник",
+//     3: "среда",
+//     4: "четверг",
+//     5: "пятница",
+//     6: "суббота"
+// }
+
+// let arrayMonth = {
+//     0: "январь",
+//     1: "февраль",
+//     2: "март",
+//     3: "апрель",
+//     4: "май",
+//     5: "июнь",
+//     6: "июль",
+//     7: "август",
+//     8: "сентябрь",
+//     9: "октябрь",
+//     10: "ноябрь",
+//     11: "декабрь"
+// }
+
+// for (let index in arrayDays) {
+//     if (date.getDay() == index) {
+//         dayWeek = arrayDays[index];
+//     }
+// }
+
+// for (let index in arrayMonth) {
+//     if (date.getMonth() == index) {
+//         month = arrayMonth[index];
+//     }
+// }
+
+// console.log(`Сегодня - ${month}, ${date.getDate()} (${dayWeek})`);
+
+/* дата*/
+// let month = "";
+// let dayWeek = "";
+
+// let date = new Date();
+
+// let arrayDays = {
+//     0: "воскресенье",
+//     1: "понедельник",
+//     2: "вторник",
+//     3: "среда",
+//     4: "четверг",
+//     5: "пятница",
+//     6: "суббота"
+// }
+
+// let arrayMonth = {
+//     0: "январь",
+//     1: "февраль",
+//     2: "март",
+//     3: "апрель",
+//     4: "май",
+//     5: "июнь",
+//     6: "июль",
+//     7: "август",
+//     8: "сентябрь",
+//     9: "октябрь",
+//     10: "ноябрь",
+//     11: "декабрь"
+// }
+
+// for (let index in arrayDays) {
+//     if (date.getDay() == index) {
+//         dayWeek = arrayDays[index];
+//     }
+// }
+
+// for (let index in arrayMonth) {
+//     if (date.getMonth() == index) {
+//         month = arrayMonth[index];
+//     }
+// }
+
+// console.log(`Сегодня - ${date.getFullYear()}, ${month}, ${date.getDate()}(${dayWeek}). Время ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
+
+/*** Пример ***/
+// let a, b, c;
+// let D;
+// let x1, x2;
+
+// function setParametrs() {
+//     a = Number(prompt("коэф. a:"));
+//     checkParametr(a);
+
+//     b = Number(prompt("коэф. b:"));
+//     checkParametr(b);
+
+//     c = Number(prompt("коэф. c:"));
+//     checkParametr(c);
+// }
+
+// function checkParametr(param) {
+//     return isNaN(param) ? alert("Не число!") : param;
+// }
+
+// setParametrs();
+
+/*решение уравнения*/
+let params = setParametrs();
+let solution;
+
+if (typeof params != "undefined") {
+    solution = calcSolution(params[0], params[1], params[2]);
+    getSolution(solution);
+} else {
+    alert("Вы отменили ввод!");
 }
-else {
-    console.log("Кол-во элементов в массиве должно быть > 0 и не больше 20!");
+
+function setParametrs() {
+    let a, b, c; //коэф. кв. уравнения
+
+    if (a = setParam("a")) {
+        if (b = setParam("b")) {
+            if (c = setParam("c")) {
+                return [a, b, c];
+            }
+        }
+    }
+}
+
+function setParam(nameParam) {
+    let param; //коэффициент уравнения
+    let cancel; //флаг для проверки ввода параметра
+
+    do {
+        param = prompt(`Коэф. ${nameParam}:`);
+        cancel = checkParametr(param);
+    } while (cancel);
+
+    return param;
+}
+
+function checkParametr(param) {
+    if (typeof param == "object") {
+        return false;
+    } else if (isNaN(param) || param == "") {
+        alert("Ошибка! Введена пустая строка или не число!");
+        return true;
+    }
+}
+
+function calcSolution(a, b, c) {
+    let D; //дискриминант
+    let result; //строка с итогом
+
+    if (a == 0) {
+        if (b == 0) {
+            result = "Корней нет!";
+        } else {
+            if (c != 0) {
+                result = -c / b;
+            } else {
+                result = 0;
+            }
+        }
+    } else if (b == 0) {
+        if (c != 0) {
+            (-c / a >= 0) ? result = Math.sqrt(-c / a): result = "Корней нет!";
+        } else {
+            result = 0;
+        }
+    } else if (c == 0) {
+        result = [0, -b / a];
+    } else {
+        D = calcD(a, b, c);
+        result = calcRoots(D, a, b, c);
+    }
+    return result;
+}
+
+function calcD(a, b, c) {
+    return b ** 2 - 4 * a * c;
+}
+
+function calcRoots(D, a, b, c) {
+    let x1, x2; //корни квадратного уравнения
+
+    if (D > 0) {
+        x1 = (-b + Math.sqrt(D)) / (2 * a);
+        x2 = (-b - Math.sqrt(D)) / (2 * a);
+
+        return [x1, x2];
+    } else if (D == 0) {
+        return -b / (2 * a);
+    } else {
+        return "Корней нет!";
+    }
+}
+
+function getSolution(solution) {
+    if (typeof solution == "string") {
+        alert(solution);
+    } else if (typeof solution == "number") {
+        alert(`Уравнение имеет один корень: x = ${solution.toFixed(2)}`);
+    } else {
+        alert("Уравнение квадратное. Имеет два корня:\n" + "x1 = " + solution[0].toFixed(2) + "\nx2 = " + solution[1].toFixed(2));
+    }
 }
