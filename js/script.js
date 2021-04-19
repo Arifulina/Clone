@@ -449,15 +449,15 @@ alert(`Остаток от деления a на b = ${a % b}`);
 // setParametrs();
 
 /*решение уравнения*/
-let params = setParametrs();
-let solution;
+// let params = setParametrs();
+// let solution;
 
-if (typeof params != "undefined") {
-    solution = calcSolution(params[0], params[1], params[2]);
-    getSolution(solution);
-} else {
-    alert("Вы отменили ввод!");
-}
+// if (typeof params != "string") {
+//     solution = calcSolution(params[0], params[1], params[2]);
+//     getSolution(solution);
+// } else {
+//     alert("Вы отменили ввод!");
+// }
 
 function setParametrs() {
     let a, b, c; //коэф. кв. уравнения
@@ -469,6 +469,7 @@ function setParametrs() {
             }
         }
     }
+    return "Вы отменили ввод!";
 }
 
 function setParam(nameParam) {
