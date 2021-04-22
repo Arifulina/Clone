@@ -1,32 +1,39 @@
-// Решение уравнения
-let titles = document.querySelectorAll(".title") //заголовок и названия областей формы
-let inputs = document.querySelectorAll("input"); //коллекция полей (поля ввода и кнопки)
+/***** DOM-объекты (начало) *****/
+let body = document.body; // тело страницы
+let titles = document.querySelectorAll(".title") // заголовок и названия областей формы
 
-let inputPageBgColor = document.getElementById("page_bgcolor"); //поле с цветом фона
-let inputPageImgLink = document.getElementById("page_imglink"); //поле с ссылкой на картинку
-let bgSize = document.querySelectorAll("[name='bgSize']"); //переключатели фона
-let indexChecked = getIndexChecked(bgSize); //позиция выбранного переключателя
+/* ПОЛЯ ВВОДА (числа, переключатели, флажки) */
+let inputs = document.querySelectorAll(".parametrs input"); // коллекция полей (поля ввода и кнопки)
 
-// let inputPageBgImage = document.getElementById("page_bgimg"); //поле с файлом изображения фона
+let inputPageBgColor = document.getElementById("page_bgcolor"); // поле с цветом фона
+let inputPageImgLink = document.getElementById("page_imglink"); // поле с ссылкой на картинку
+let bgSize = document.querySelectorAll("[name='bgSize']"); // переключатели масштабирования фона
 
-let inputParamA = document.getElementById("param_a");
-let inputParamB = document.getElementById("param_b");
-let inputParamC = document.getElementById("param_c");
+let inputParamA = document.getElementById("param_a"); // поле с коэф. а
+let inputParamB = document.getElementById("param_b"); // поле с коэф. b
+let inputParamC = document.getElementById("param_c"); // поле с коэф. c
 
-let paramA; //значение коэф. а
-let paramB; //значение коэф. b
-let paramC; //значение коэф. c
+/* ПОЛЗУНКИ */
+let rangeParamA = document.getElementById("range_a"); // ползунок с коэф. а
+let rangeParamB = document.getElementById("range_b"); // ползунок с коэф. b
+let rangeParamC = document.getElementById("range_c"); // ползунок с коэф. c
 
-let rangeParamA = document.getElementById("range_a");
-let rangeParamB = document.getElementById("range_b");
-let rangeParamC = document.getElementById("range_c");
+/* КНОПКИ */
+let buttons = document.querySelectorAll(".btn"); // коллекция кнопок
+let btnCalc = document.getElementById("btn_calc"); // кнопка расчёта
+let btnReset = document.getElementById("btn_reset"); // кнопка очистки
+let btnPlay = document.getElementById("btn_play"); // кнопка включения плеера
+/***** DOM-объекты (конец) *****/
 
-let buttons = document.querySelectorAll(".btn");
-let btnCalc = document.getElementById("btn_calc"); //кнопка расчёта
-let btnReset = document.getElementById("btn_reset"); //кнопка очистки
-let btnPlay = document.getElementById("btn_play"); //кнопка включения плеера
+/***** Пользовательские переменные (начало) *****/
+let indexChecked = getIndexChecked(bgSize); // позиция выбранного переключателя
 
-let player;
+let paramA; // значение коэф. а
+let paramB; // значение коэф. b
+let paramC; // значение коэф. c
+let player; // создаваемый в DOM объект плеер
+
+/* объект, содержащий свойства создаваемого плеера */
 let playerAttributes = {
     "id": "player",
     "src": "media/sample.mp3",
@@ -35,55 +42,52 @@ let playerAttributes = {
     "class": "player"
 };
 
-let result; //результат вычисления
-let solution; //объект для вывода результата
+let result; // результат вычисления
+let solution; // создаваемый в DOM объект (абзац) для вывода результата
+/***** Пользовательские переменные (конец) *****/
 
-// обработчик события "change" при изменении цвета фона 
+/***** ОБРАБОТЧИКИ СОБЫТИЙ (начало) *****/
+
+// обработчик события "change" при изменении цвета фона
 inputPageBgColor.addEventListener("input", () => {
-    document.body.style.backgroundColor = inputPageBgColor.value;
+    body.style.backgroundColor = inputPageBgColor.value;
 
     for (let title of titles) {
-        title.style.color = document.body.style.backgroundColor;
+        title.style.color = body.style.backgroundColor;
         title.style.filter = "invert(75%) hue-rotate(270deg)";
     }
 })
 
 // обработчик события "input" при загрузки фонового изображения
 inputPageImgLink.addEventListener("change", () => {
-    document.body.style.backgroundImage = `url("${inputPageImgLink.value}")`;
     indexChecked = getIndexChecked(bgSize);
-
-    switch (indexChecked) {
-        case 0:
-            document.body.style.backgroundRepeat = "no-repeat";
-            document.body.style.backgroundSize = "1920px";
-            break;
-        case 1:
-            document.body.style.backgroundRepeat = "no-repeat";
-            document.body.style.backgroundSize = "cover";
-            break;
-        case 2:
-            break;
-    }
+    setBgPage(indexChecked);
 })
 
 // обработчик события "input" при выборе обычного масштаба
-bgSize[indexChecked].addEventListener("input", () => {
+bgSize[0].addEventListener("input", () => {
+    setBgPage(0);
+})
 
-    // switch (indexChecked) {
-    //     case 0: document.body.style.backgroundRepeat = "no-repeat";
-    //         document.body.style.backgroundSize = "1920px";
-    //         break;
-    //     case 1: document.body.style.backgroundRepeat = "no-repeat";
-    //         document.body.style.backgroundSize = "cover";
-    //         break;
-    //     case 2: break;
-    // }
+// обработчик события "input" при выборе масштабирования фона
+bgSize[1].addEventListener("input", () => {
+    setBgPage(1);
+})
+
+// обработчик события "input" при выборе мозаичного фона
+bgSize[2].addEventListener("input", () => {
+    setBgPage(2);
 })
 
 // обработчик события "input" при вводе в поле коэф. a 
 inputParamA.addEventListener("input", () => {
     paramA = updateParam(inputParamA, rangeParamA);
+    unBlocked(inputParamB, rangeParamB, buttons);
+})
+
+// обработчик события "change" при изменении ползунка коэф. a 
+rangeParamA.addEventListener("change", () => {
+    paramA = updateParam(rangeParamA, inputParamA);
     unBlocked(inputParamB, rangeParamB, buttons);
 })
 
@@ -93,21 +97,15 @@ inputParamB.addEventListener("input", () => {
     unBlocked(inputParamC, rangeParamC);
 })
 
-// обработчик события "input" при вводе в поле коэф. c
-inputParamC.addEventListener("input", () => {
-    paramC = updateParam(inputParamC, rangeParamC);
-})
-
-// обработчик события "change" при изменении ползунка коэф. a 
-rangeParamA.addEventListener("change", () => {
-    paramA = updateParam(rangeParamA, inputParamA);
-    unBlocked(inputParamB, rangeParamB, buttons);
-})
-
 // обработчик события "change" при изменении ползунка коэф. b 
 rangeParamB.addEventListener("change", () => {
     paramB = updateParam(rangeParamB, inputParamB);
     unBlocked(inputParamC, rangeParamC);
+})
+
+// обработчик события "input" при вводе в поле коэф. c
+inputParamC.addEventListener("input", () => {
+    paramC = updateParam(inputParamC, rangeParamC);
 })
 
 // обработчик события "change" при изменении ползунка коэф. c 
@@ -127,28 +125,31 @@ btnReset.addEventListener("click", () => {
         if (item.getAttribute("type") == "number" || item.getAttribute("type") == "range") {
             item.value = "";
         }
-        if (item.getAttribute("id") == "param_a" || item.getAttribute("id") == "range_a") {
+        if (item.getAttribute("id") == "param_a" || item.getAttribute("id") == "range_a" || item.getAttribute("id") == "btn_play") {
             continue;
         } else {
             item.setAttribute("disabled", "disabled");
         }
     }
-    document.body.removeChild(solution);
+    body.removeChild(solution);
 })
 
 // обработчик события "click" при клике по кнопке "Показать/удалить плеер"
 btnPlay.addEventListener("click", () => {
-    if (document.getElementById("player")) {
-        document.body.removeChild(player);
-        btnPlay.setAttribute("value", "Показать плеер");
-    } else {
-        player = createPlayer("audio", playerAttributes);
+        if (document.getElementById("player")) {
+            body.removeChild(player);
+            btnPlay.setAttribute("value", "Показать плеер");
+        } else {
+            player = createPlayer("audio", playerAttributes);
 
-        document.body.append(player);
-        btnPlay.setAttribute("value", "Удалить плеер");
-    }
-})
+            body.append(player);
+            btnPlay.setAttribute("value", "Удалить плеер");
+        }
+    })
+    /***** ОБРАБОТЧИКИ СОБЫТИЙ (конец) *****/
 
+/***** ФУНКЦИИ *****/
+// функция, возвращающая порядковый номер выбранного переключателя
 function getIndexChecked(bgSize) {
     for (let i = 0; i < bgSize.length; i++) {
         if (bgSize[i].checked) {
@@ -157,17 +158,24 @@ function getIndexChecked(bgSize) {
     }
 }
 
+// функция, задающая изображение фона страницы
+function setBgPage(checked) {
+    body.style.backgroundImage = `url("${inputPageImgLink.value}")`;
 
-// функция создания аудио-плеера
-function createPlayer(tag, attr) {
-    let player = document.createElement(tag);
-
-    for (let key in attr) {
-        player.setAttribute(key, attr[key]);
+    switch (checked) {
+        case 0:
+            body.style.backgroundRepeat = "no-repeat";
+            body.style.backgroundSize = "1920px";
+            break;
+        case 1:
+            body.style.backgroundRepeat = "no-repeat";
+            body.style.backgroundSize = "cover";
+            break;
+        case 2:
+            body.style.backgroundSize = "auto";
+            body.style.backgroundRepeat = "repeat";
+            break;
     }
-    player.classList.add("player-show");
-
-    return player;
 }
 
 // функция разблокировки полей и кнопок
@@ -188,6 +196,18 @@ function updateParam(input1, input2) {
     input2.value = param; //значение поля/ползунка с коэф.
 
     return param;
+}
+
+// функция создания аудио-плеера
+function createPlayer(tag, attr) {
+    let player = document.createElement(tag);
+
+    for (let key in attr) {
+        player.setAttribute(key, attr[key]);
+    }
+    player.classList.add("player-show");
+
+    return player;
 }
 
 // главная функция расчёта корней (вычисление)
@@ -248,18 +268,18 @@ function calcRoots(D, a, b, c) {
     }
 }
 
-// функция вывода результа на страницу (в объект p)
+// функция вывода результа на страницу (в создаваемый объект solution - абзац)
 function printSolution() {
     if (document.querySelector(".solution")) {
         solution.innerHTML = checkResult(result);
     } else {
         solution = createElem("p", checkResult(result));
         solution.innerHTML = checkResult(result);
-        document.body.append(solution);
+        body.append(solution);
     }
 }
 
-//функция создания элемента
+// функция создания элемента
 function createElem(tag, content) {
     let elem;
 
@@ -282,7 +302,7 @@ function checkResult(result) {
 }
 
 
-
+/***** КОД при использовании alert и prompt *****/
 // let params = setParametrs();
 // let solution;
 
