@@ -1,3 +1,98 @@
+const input = {
+    type: "number",
+    placeholder: "Введите возраст",
+    styles: {
+        display: "flex",
+        margin: "20px auto 0",
+        padding: "5px 10px",
+        border: "2px solid gold",
+        outlineColor: "lightgreen",
+        fontFamily: "Verdana, sans-serif",
+        fontSize: "18px",
+        color: "blue"
+    },
+    getType() {
+        return this.type;
+    },
+    getPlaceholder() {
+        return this.placeholder;
+    },
+    getStyles() {
+        return this.styles;
+    }
+}
+
+const inputAge = createElem("input");
+document.body.insertAdjacentElement("afterbegin", inputAge);
+inputAge.focus();
+
+let p; //абзац с результатом
+
+const result = () => {
+    if (document.getElementById("result")) {
+        p.innerHTML = `Вам: ${inputAge.value} ${getGrammaticYear(inputAge.value)}`;
+    } else {
+        p = createElem("p");
+        inputAge.insertAdjacentElement("afterend", p);
+    }
+}
+
+inputAge.addEventListener("input", () => {
+    result();
+})
+
+function createElem(tagName) {
+    elem = document.createElement(tagName);
+
+    switch (tagName) {
+        case "p":
+            elem.setAttribute("id", "result");
+
+            elem.style.textAlign = "center";
+            elem.style.fontFamily = "Georgia, serif";
+            elem.style.fontSize = "22px";
+            elem.style.color = "green";
+
+            elem.innerHTML = `Вам: ${inputAge.value} ${getGrammaticYear(inputAge.value)}`;
+            break;
+        case "input":
+            elem.setAttribute("type", input.getType());
+            elem.setAttribute("placeholder", input.getPlaceholder());
+
+            for (let key in input.getStyles()) {
+                elem.style[key] = input.getStyles()[key];
+            }
+            break;
+    }
+
+    return elem;
+}
+
+function getGrammaticYear(years) {
+    let result = "";
+
+    //1, 21, 31,... (кроме 11) - "год"
+    //5 - 20, 25-30, 35-40,... - "лет"
+    //2 - 4, 22, 23, 24,... (кроме 12, 13, 14) - "года"
+
+    if (years % 10 == 1 && years % 100 != 11) {
+        result = "год";
+    }
+    // else if ((years >= 5 && years <= 19) || (years % 10 == 0) ||
+    //     ((years % 10 >= 5) && (years % 10 <= 9))
+    // ) {
+    //     result = "лет";
+    // } 
+    else if (years % 10 >= 2 && years % 10 <= 4 && (years % 100 > 14 || years % 100 < 12)) {
+        result = "года";
+    } else {
+        result = "лет";
+    }
+    return result;
+}
+
+
+/**********
 let users = [];
 let user;
 let countUsers = prompt("Кол-во пользователей (объектов):"); //string или null (object)
@@ -36,7 +131,9 @@ function getUsers(users) {
     for (let user of users) {
         console.log(`${getUserName(user)}, возраст - ${user.age}`);
     }
-}
+}*************/
+
+
 // *** Функциональное выражение (Function Expression) ***
 // let number = 5;
 // const factorial = function inner(number) {
