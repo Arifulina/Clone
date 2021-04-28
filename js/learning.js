@@ -1,6 +1,7 @@
 const input = {
     type: "number",
     placeholder: "Введите возраст",
+    minValue: 1,
     styles: {
         display: "flex",
         margin: "20px auto 0",
@@ -27,10 +28,11 @@ document.body.insertAdjacentElement("afterbegin", inputAge);
 inputAge.focus();
 
 let p; //абзац с результатом
+let error; //окно с ошибкой
 
 const result = () => {
     if (document.getElementById("result")) {
-        p.innerHTML = `Вам: ${inputAge.value} ${getGrammaticYear(inputAge.value)}`;
+        p.innerHTML = `Вам: ${inputAge.value} ${getGrammaticYear(+inputAge.value)}`;
     } else {
         p = createElem("p");
         inputAge.insertAdjacentElement("afterend", p);
@@ -38,7 +40,29 @@ const result = () => {
 }
 
 inputAge.addEventListener("input", () => {
-    result();
+    if (+inputAge.value > 0) {
+        if (document.querySelector(".error")) {
+            setTimeout(() => {
+                error.classList.remove("animate__backInDown");
+                error.classList.add("animate__backOutUp");
+            }, 500);
+            setTimeout(() => { error.remove(); }, 3000);
+        }
+        result();
+    } else {
+        if (inputAge.value != "") {
+            error = createElem("div");
+            document.body.insertAdjacentElement("afterbegin", error);
+        } else {
+            if (document.querySelector(".error")) {
+                setTimeout(() => {
+                    error.classList.remove("animate__backInDown");
+                    error.classList.add("animate__backOutUp");
+                }, 500);
+                setTimeout(() => { error.remove(); }, 3000);
+            }
+        }
+    }
 })
 
 function createElem(tagName) {
@@ -53,7 +77,7 @@ function createElem(tagName) {
             elem.style.fontSize = "22px";
             elem.style.color = "green";
 
-            elem.innerHTML = `Вам: ${inputAge.value} ${getGrammaticYear(inputAge.value)}`;
+            elem.innerHTML = `Вам: ${inputAge.value} ${getGrammaticYear(+inputAge.value)}`;
             break;
         case "input":
             elem.setAttribute("type", input.getType());
@@ -62,6 +86,10 @@ function createElem(tagName) {
             for (let key in input.getStyles()) {
                 elem.style[key] = input.getStyles()[key];
             }
+            break;
+        case "div":
+            elem.classList.add("error", "animate__animated", "animate__backInDown");
+            elem.textContent = "Ошибка! Возраст не может быть < 0.";
             break;
     }
 
@@ -72,25 +100,21 @@ function getGrammaticYear(years) {
     let result = "";
 
     //1, 21, 31,... (кроме 11) - "год"
-    //5 - 20, 25-30, 35-40,... - "лет"
     //2 - 4, 22, 23, 24,... (кроме 12, 13, 14) - "года"
+    //5 - 19, 20, 25 - 29, 30, 35 - 39, 40,... - "лет"
 
     if (years % 10 == 1 && years % 100 != 11) {
         result = "год";
-    }
-    // else if ((years >= 5 && years <= 19) || (years % 10 == 0) ||
-    //     ((years % 10 >= 5) && (years % 10 <= 9))
-    // ) {
-    //     result = "лет";
-    // } 
-    else if (years % 10 >= 2 && years % 10 <= 4 && (years % 100 > 14 || years % 100 < 12)) {
+    } else if (years % 10 >= 2 &&
+        years % 10 <= 4 &&
+        (years % 100 > 14 || years % 100 < 12)
+    ) {
         result = "года";
     } else {
         result = "лет";
     }
     return result;
 }
-
 
 /**********
 let users = [];
