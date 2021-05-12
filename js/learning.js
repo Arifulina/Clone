@@ -10,10 +10,36 @@ let imgUrl = ""; //адрес изображения
 class Card {
     //конструктор с параметрами, создающий объект карточку (не DOM-объект)
 
-    _id = "";
-    _className = "";
-    _text = "";
-    _imageSource = "";
+    _id;
+    _className;
+    _text;
+    _imageSource;##
+    width = 100;#
+    height = 50;
+
+    get Width() {
+        return this.#width;
+    }
+
+    set Width(value) {
+        if (document.getElementById("card")) {
+            this.#width = value;
+        } else {
+            this.#width = 0;
+        }
+    }
+
+    get Height() {
+        return this.#height;
+    }
+
+    set Height(value) {
+        if (document.getElementById("card")) {
+            this.#height = value;
+        } else {
+            this.#height = 0;
+        }
+    }
 
     constructor(id, className, text, imgUrl) {
         this.Id = id;
@@ -103,7 +129,44 @@ class Card {
         }
         document.getElementById("card").className = `card ${this.ClassName}`;
     }
+
+    static getSizeCard(id) {
+        return [document.getElementById(id).offsetWidth, document.getElementById(id).offsetHeight];
+    }
 }
+
+class ChildCard extends Card {#
+    cardName;
+
+    constructor(id, className, text, imgUrl) {
+        super(id, className, text, imgUrl);
+        this.CardName = "Дочерняя";
+    }
+
+    get CardName() {
+        return this.#cardName;
+    }
+
+    set CardName(value) {
+        this.#cardName = value;
+    }
+
+    modifiedCard(typeCard) {
+        if (document.getElementById("child")) {
+            this.ClassName = typeCard;
+            document.getElementById("child").classList.add(this.ClassName);
+            document.querySelector(".card img").style.width = "75%";
+            document.querySelector(".card p").style.width = "80%";
+            document.querySelector(".card p").style.margin = "10px auto";
+        }
+    }
+}
+
+let child = new ChildCard("child", "card-decorative", text, "https://picsum.photos/500/300");
+child.createCard();
+child.modifiedCard("card-circle");
+console.log(document.querySelector(".card img") instanceof HTMLImageElement);
+
 
 for (let radio of radioButtons) {
     radio.addEventListener("change", () => {
@@ -119,8 +182,23 @@ for (let radio of radioButtons) {
             card = new Card("card", radio.value, text, imgUrl);
             card.createCard();
         }
+
+        if (card) {
+            const p = document.getElementById("cardSize");
+            const span = document.querySelector(".card-size span");
+            p.classList.remove("hide");
+
+            for (let key in Card.getSizeCard("card")) {
+                if (key == 0) {
+                    span.textContent = `ширина: ${Card.getSizeCard("card")[key]}`;
+                } else {
+                    span.textContent += `, высота: ${Card.getSizeCard("card")[key]}`;
+                }
+            }
+        }
     });
 }
+
 
 // const input = {
 //   type: "number",
