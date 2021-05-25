@@ -1,16 +1,64 @@
+body {
+	margin: 0;
+}
+
+.hidden {
+	display: none;
+}
+
+.btn {
+	padding: 10px 15px;
+	font-size: 0.75rem;
+	font-weight: bold;
+	text-transform: uppercase;
+	color: white;
+	border: none;
+
+	transition: all 0.25s;
+}
+
+.btn:hover {
+	cursor: pointer;
+}
+
+.btn-create {
+	background-image: linear-gradient(to top, #0ba360 0%, #3cba92 100%);
+}
+
+.btn-create-vip {
+	background-image: linear-gradient(to top, #6907aa 0%, #9039c2 100%);
+}
+
+.btn-remove {
+	background-image: linear-gradient(to top, #f77062 0%, #fe5196 100%);
+}
+
+.btn-create:hover {
+	background-image: linear-gradient(to top, #087244 0%, #3cba92 100%);
+}
+
+.btn-create-vip:hover {
+	background-image: linear-gradient(to top, #44076d 0%, #9039c2 100%);
+}
+
+.btn-remove:hover:not([disabled]) {
+	background-image: linear-gradient(to top, #c25043 0%, #fe5196 100%);
+}
+
+
 .generateTable {
 	margin: auto;
 	width: 75%;
-	/* border: 2px solid green; */
 	border-collapse: collapse;
 }
 
 .generateTable caption {
-	margin-bottom: 15px;
+	margin-bottom: 1.75rem;
 	text-transform: uppercase;
-	font-family: "Verdana", sans-serif;
+	font-family: "Georgia", sans-serif;
+	font-size: 1.25rem;
 	font-weight: bold;
-	color: green;
+	color: rgb(90, 40, 228);
 }
 
 .generateTable thead {
@@ -19,6 +67,8 @@
 
 .generateTable th {
 	padding: 5px 0;
+	font-family: "Verdana";
+	font-size: 0.8rem;
 	color: white;
 }
 
@@ -26,7 +76,7 @@ tbody tr {
 	transition: all 0.5s;
 }
 
-tbody tr:hover {
+tbody tr:hover:not(:first-child) {
 	cursor: pointer;
 	transform: scale(1.025);
 }
@@ -34,6 +84,19 @@ tbody tr:hover {
 .generateTable td {
 	padding: 5px;
 	border: 1px solid blue;
+}
+
+.generateTable .title-category {
+	padding: 15px 0;
+
+	font-family: "Verdana", sans-serif;
+	font-size: 0.8rem;
+	letter-spacing: 1px;
+	font-weight: bold;
+	text-transform: uppercase;
+
+	color: rgb(255, 255, 255);
+	background-color: rgb(121, 123, 245);
 }
 
 .generateTable th:first-child {
@@ -45,9 +108,37 @@ tbody tr:hover {
 }
 
 tbody tr:nth-child(odd) {
-	background-color: lightblue;
+	background-color: rgb(185, 236, 253);
 }
 
 tbody tr:nth-child(even) {
-	background-color: lightgreen;
+	background-color: rgb(213, 246, 252);
+}
+
+.btnRowDelete {
+	box-sizing: border-box;
+	padding: 10px 30px;
+	position: fixed;
+	top: 150px;
+	right: -115px;
+	z-index: 100;
+	transform: rotate(-90deg);
+
+	text-transform: uppercase;
+	background-color: rgba(7, 90, 145, 0.863);
+	color: white;
+	border: none;
+
+	transition: all 0.25s;
+}
+
+.btnRowDelete:hover:not([disabled]) {
+	cursor: pointer;
+	background-color: rgb(7, 93, 128);
+}
+
+[disabled] {
+	background-color: rgb(175, 173, 173);
+	background-image: none;
+	cursor: auto !important;
 }

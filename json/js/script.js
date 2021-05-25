@@ -1,96 +1,121 @@
-let JSONstr = `{
-  "1": {
-    "id": 1,
-    "name": "Услуга 1",
-    "category": "Категория 1",
-    "price": 1000,
-    "discont": 10
-  },
-  "2": {
-    "id": 2,
-    "name": "Услуга 2",
-    "category": "Категория 1",
-    "price": 2500,
-    "discont": 0
-  },
-  "3": {
-    "id": 3,
-    "name": "Услуга 3",
-    "category": "Категория 2",
-    "price": 500,
-    "discont": 0
-  },
-  "4": {
-    "id": 4,
-    "name": "Услуга 4",
-    "category": "Категория 2",
-    "price": 2000,
-    "discont": 5
-  },
-  "5": {
-    "id": 5,
-    "name": "Услуга 5",
-    "category": "Категория 3",
-    "price": 1500,
-    "discont": 15
-  }
-}`;
-
-const services = JSON.parse(JSONstr);
-
-// let requestURL = "../json/js/services.json";
-
-// let request = new XMLHttpRequest();
-// request.open("GET", requestURL);
-
-// request.responseType = "json";
-// request.send();
-
-// request.onload = function () {
-// let services = request.response;
-
-let countKeys = 0; // кол-во ключей в объекте (кол-во ячеек в таблице)
-let countServices = 0; // кол-во услуг (кол-во объектов)
-for (let key in services[1]) {
-  if (services[1].hasOwnProperty(key)) {
-    countKeys++;
-  }
-}
-
-for (let key in services) {
-  if (services.hasOwnProperty(key)) {
-    countServices++;
-  }
-}
-
 let headersName = new Map(); // ассоциативный массив с именами заголовков таблицы
 
 const btnsContainer = document.getElementById("buttons"); // div с кнопками
-const btnCreate = document.getElementById("createTable"); // кнопка "Создать таблицу"
-const btnDelete = document.getElementById("deleteTable"); // кнопка "Удалить таблицу"
+const btnCreate = document.getElementById("mainServices"); // кнопка "Основные услуги"
+const btnCreateVip = document.getElementById("vipServices"); // кнопка "VIP-услуги"
+const btnDelete = document.getElementById("remove"); // кнопка "Удалить"
+let btnRowDelete; // кнопка удаления последней строки
 
-// обработчик события "click" по кнопке "Создать таблицу"
+let services;
+let countKeys = 0; // кол-во ключей в объекте (кол-во ячеек в таблице)
+let countServices = 0; // кол-во услуг (кол-во объектов)
+
+let requestVip = "js/vip-services.json";
+let requestServices = "js/services.json";
+let request = new XMLHttpRequest();
+
+// обработчик события "click" по кнопке "Основные услуги"
 btnCreate.addEventListener("click", () => {
-  // если таблица с id "generateTable" не существует в DOM
+  // getResponse("GET", requestServices, true);
+
   if (!document.getElementById("generateTable")) {
-    createTable(services); // вызов функции создания таблицы
+    request.open("GET", requestServices, true); //асинхронный
+    request.responseType = "json";
+
+    request.addEventListener("readystatechange", () => {
+      if (request.readyState == 4 && request.status == 200) {
+        services = request.response;
+        for (let key in services[1]) {
+          if (services[1].hasOwnProperty(key)) {
+            countKeys++;
+          }
+        }
+
+        for (let key in services) {
+          if (services.hasOwnProperty(key)) {
+            countServices++;
+          }
+        }
+
+        // если таблица с id "generateTable" не существует в DOM
+        createTable(services); // вызов функции создания таблицы
+        btnCreateVip.classList.remove("hidden");
+        btnDelete.removeAttribute("disabled");
+
+        btnRowDelete = document.createElement("button");
+        btnRowDelete.id = "btnRowDelete";
+        btnRowDelete.textContent = "Удалить последнюю строку";
+        btnRowDelete.classList.add("btnRowDelete");
+
+        document
+          .getElementById("generateTable")
+          .insertAdjacentElement("afterend", btnRowDelete);
+
+        btnRowDelete.addEventListener("click", () => {
+          let i = 0;
+          for (let row of document.getElementById("generateTable").rows) {
+            if (!row.classList.contains("hidden")) {
+              i++;
+            }
+          }
+          btnCreate.textContent = "Отобразить";
+          if (i > 2) {
+            document
+              .querySelector(`tbody tr:nth-child(${i - 1})`)
+              .classList.add("hidden");
+          }
+          if (i == 4) {
+            btnRowDelete.setAttribute("disabled", "");
+          }
+        });
+      }
+    });
+
+    request.send();
+  } else {
+    btnCreate.textContent = "Основные услуги";
+
+    for (let row of document.getElementById("generateTable").rows) {
+      if (row.classList.contains("hidden")) {
+        row.classList.remove("hidden");
+      }
+    }
+
+    document.getElementById("generateTable").classList.remove("hidden");
+    btnCreateVip.classList.remove("hidden");
+    btnDelete.removeAttribute("disabled");
+    btnRowDelete.classList.remove("hidden");
+    btnRowDelete.removeAttribute("disabled");
   }
 });
 
-// обработчик события "click" по кнопке "Удалить таблицу"
+// обработчик события "click" по кнопке "VIP-услуги"
+btnCreateVip.addEventListener("click", () => {
+  let row, cell;
+  row = document.getElementById("generateTable").insertRow();
+  cell = row.insertCell(); // добавляем ячейку (td) к строке (tr)
+  cell.setAttribute("colspan", countKeys);
+  cell.textContent = "VIP-Услуги";
+  cell.classList.add("title-category");
+});
+
+// обработчик события "click" по кнопке "Удалить"
 btnDelete.addEventListener("click", () => {
   if (document.getElementById("generateTable")) {
-    document.getElementById("generateTable").remove();
+    document.getElementById("generateTable").classList.add("hidden");
+    btnCreateVip.classList.add("hidden");
+    document.getElementById("btnRowDelete").classList.add("hidden");
+    btnDelete.setAttribute("disabled", "");
   }
 });
 
 // функция создания таблицы
 function createTable() {
-  const table = document.createElement("table"); // объект (тег table)
+  let table = document.createElement("table"); // объект (тег table)
   table.id = "generateTable"; // задаём тегу table id
   table.classList.add("generateTable"); // добавляем класс
 
-  const caption = table.createCaption(); // объект (тег caption)
+  let caption = table.createCaption(); // объект (тег caption)
   caption.textContent = "Наши услуги";
 
   createTHead(table); // вызов функции создания заголовочной строки (тег thead)
@@ -113,11 +138,16 @@ function createTHead(table) {
 
     // внутренний цикл - по заголовочным ячейкам (th)
     for (let j = 0; j < countKeys; j++) {
-      cellHead = document.createElement("th"); // создаём заголовочную ячейку (th)
-
-      j == 0
-        ? (cellHead.textContent = "№ п/п")
-        : (cellHead.textContent = headersName.get((j - 1).toString()).value); // получаем из массива headersName значение ключа "value" для каждой (j - 1) ячейки
+      if (j == 0) {
+        cellHead = document.createElement("th"); // создаём заголовочную ячейку (th)
+        cellHead.textContent = "№ п/п";
+      } else {
+        if (headersName.get((j - 1).toString()).keyName === "category") {
+          continue;
+        }
+        cellHead = document.createElement("th"); // создаём заголовочную ячейку (th)
+        cellHead.textContent = headersName.get((j - 1).toString()).value; // получаем из массива headersName значение ключа "value" для каждой (j - 1) ячейки
+      }
 
       row.append(cellHead); // добавление ячейки к строке
     }
@@ -129,17 +159,30 @@ function createTBody(table) {
   let tBody = table.createTBody(); // объект (тег tbody)
   let row, cell; // объекты: строка (тег tr) и ячейка (тег td)
 
+  row = tBody.insertRow(); // добавляем строку (tr) к tbody
+  cell = row.insertCell(); // добавляем ячейку (td) к строке (tr)
+  cell.setAttribute("colspan", countKeys);
+  cell.textContent = headersName.get("1").value;
+
+  cell.classList.add("title-category");
+
   // внешний цикл - по строкам (tr)
   for (let i = 0; i < countServices; i++) {
     row = tBody.insertRow(); // добавляем строку (tr) к tbody
 
     // внутренний цикл - по ячейкам (td)
     for (let j = 0; j < countKeys; j++) {
-      cell = row.insertCell(); // добавляем ячейку (td) к строке (tr)
+      if (j == 0) {
+        cell = row.insertCell(); // добавляем ячейку (td) к строке (tr)
+        cell.textContent = i + 1;
+      } else {
+        if (headersName.get((j - 1).toString()).keyName === "category") {
+          continue;
+        }
 
-      j == 0
-        ? (cell.textContent = i + 1)
-        : (cell.textContent = getValue(i, j - 1)); // получаем значение для ячейки из массива services для каждого объекта
+        cell = row.insertCell(); // добавляем ячейку (td) к строке (tr)
+        cell.textContent = getValue(i, j - 1); // получаем значение для ячейки из массива services для каждого объекта
+      }
     }
   }
 }
@@ -163,7 +206,7 @@ function setHeadersName(services) {
       case "category":
         index = "1";
         keyName = "category";
-        value = "Категория";
+        value = services[1].category;
         break;
       case "price":
         index = "2";
@@ -207,7 +250,5 @@ function getValue(indexRow, indexCell) {
       continue;
     }
   }
-
   return value;
 }
-// };
