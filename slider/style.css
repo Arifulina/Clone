@@ -127,7 +127,7 @@ body {
 }
 
 .navigation-visibility .slide-icon.active {
-    background: rgb(97, 94, 94);
+    background: #4a4b4b;
 }
 
 @media (max-width: 900px) {
