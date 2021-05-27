@@ -6,7 +6,7 @@ const slideIcons = document.querySelectorAll(".slide-icon");
 const numberOfSlides = slides.length;
 let slideNumber = 0;
 
-// ползунок изображения следующая кнопка
+// обработчик события для следующая кнопка слайдера изображения
 
 nextBtn.addEventListener("click", () => {
   slides.forEach((slide) => {
@@ -26,7 +26,7 @@ nextBtn.addEventListener("click", () => {
   slideIcons[slideNumber].classList.add("active");
 });
 
-// предыдущая кнопка слайдера изображения
+// обработчик события для предыдущая кнопка слайдера изображения
 prevBtn.addEventListener("click", () => {
   slides.forEach((slide) => {
     slide.classList.remove("active");
@@ -45,7 +45,7 @@ prevBtn.addEventListener("click", () => {
   slideIcons[slideNumber].classList.add("active");
 });
 
-// автозапуск слайдера изображения
+// функции автозапуска слайдера изображения
 let playSlider;
 
 let repeater = () => {
@@ -69,12 +69,12 @@ let repeater = () => {
 };
 repeater();
 
-// останавливаем автовоспроизведение слайдера изображения при наведении курсора мыши
+// обработчик события останавливает автовоспроизведение слайдера изображения при наведении курсора мыши на слайдер
 slider.addEventListener("mouseover", () => {
   clearInterval(playSlider);
 });
 
-// снова запускаем автозапуск слайдера изображения при наведении курсора мыши
+// обработчик события снова запускает автозапуск слайдера изображения при убирании курсора мыши с него
 slider.addEventListener("mouseout", () => {
   repeater();
 });

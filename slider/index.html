@@ -3,18 +3,21 @@
 
 <head>
     <meta charset="UTF-8" />
+    <link rel="icon" href="./img/favicon.ico" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Слайдер изображений</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous" />
+    <title>Проект слайдер изображений</title>
+
+    <!-- подключаем стили -->
     <link rel="stylesheet" href="style.css" />
+    <!-- подключаем Font Awesome к проекту -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 </head>
 
 <body>
     <div class="slider">
         <div class="slide active">
-            <img src="1.jpg" alt="озеро Селигер" />
+            <img src="./img/1.jpg" alt="озеро Селигер" />
             <div class="info">
                 <h2>озеро Селигер</h2>
                 <p>
@@ -23,7 +26,7 @@
             </div>
         </div>
         <div class="slide">
-            <img src="2.jpg" alt="река Чёрная" />
+            <img src="./img/2.jpg" alt="река Чёрная" />
             <div class="info">
                 <h2>река Чёрная</h2>
                 <p>
@@ -32,7 +35,7 @@
             </div>
         </div>
         <div class="slide">
-            <img src="3.jpg" alt="озеро Круглое" />
+            <img src="./img/3.jpg" alt="озеро Круглое" />
             <div class="info">
                 <h2>озеро Круглое</h2>
                 <p>
@@ -41,7 +44,7 @@
             </div>
         </div>
         <div class="slide">
-            <img src="4.jpg" alt="Болото" />
+            <img src="./img/4.jpg" alt="Болото" />
             <div class="info">
                 <h2>Болото</h2>
                 <p>
@@ -60,12 +63,7 @@
             <div class="slide-icon"></div>
         </div>
     </div>
-
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
+    <!-- подключаем скрипт -->
     <script src="script.js"></script>
 </body>
 

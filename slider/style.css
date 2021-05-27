@@ -1,10 +1,21 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
+/* подключаем шрифт через url */
+
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@200;400&display=swap");
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Poppins", sans-serif;
+    font-family: "Nunito", sans-serif;
 }
+
+
+/* подключение сохраненного шрифта */
+
+
+/* @font-face {
+    font-family: "ConsolaMono";
+    src: url("/fonts/ConsolaMono.ttf") format("truetype");
+} */
 
 body {
     height: 100vh;
@@ -47,10 +58,10 @@ body {
     position: absolute;
     color: #222;
     background: rgba(255, 255, 255, 0.4);
-    width: 80%;
+    width: 87%;
     margin-top: 20px;
     margin-left: 50px;
-    padding: 0px 15px;
+    padding: 5px 15px;
     border-radius: 10px;
     box-shadow: 0 5px 25px rgb(1 1 1 / 5%);
 }
@@ -111,12 +122,12 @@ body {
     height: 10px;
     transform: translateY(-20px);
     margin: 0 6px;
-    border-radius: 5px;
+    border-radius: 10px;
     box-shadow: 0 5px 25px rgb(1 1 1 / 20%);
 }
 
 .navigation-visibility .slide-icon.active {
-    background: #222;
+    background: rgb(97, 94, 94);
 }
 
 @media (max-width: 900px) {
