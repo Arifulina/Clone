@@ -37,14 +37,13 @@ body {
 	background-image: linear-gradient(to top, #087244 0%, #3cba92 100%);
 }
 
-.btn-create-vip:hover {
+.btn-create-vip:hover:not([disabled]) {
 	background-image: linear-gradient(to top, #44076d 0%, #9039c2 100%);
 }
 
 .btn-remove:hover:not([disabled]) {
 	background-image: linear-gradient(to top, #c25043 0%, #fe5196 100%);
 }
-
 
 .generateTable {
 	margin: auto;
@@ -62,7 +61,7 @@ body {
 }
 
 .generateTable thead {
-	background-color: darkblue;
+	background-color: rgb(94, 94, 94);
 }
 
 .generateTable th {
@@ -73,17 +72,22 @@ body {
 }
 
 tbody tr {
+	background-image: linear-gradient(to top, #cadbf0 0%, #e7f0fd 100%);
 	transition: all 0.5s;
 }
 
-tbody tr:hover:not(:first-child) {
+tbody tr:hover {
 	cursor: pointer;
 	transform: scale(1.025);
 }
 
 .generateTable td {
-	padding: 5px;
-	border: 1px solid blue;
+	padding: 10px;
+	border: 1px solid #98beec;
+}
+
+.generateTable td:nth-child(n+3) {
+	text-align: center;
 }
 
 .generateTable .title-category {
@@ -107,12 +111,20 @@ tbody tr:hover:not(:first-child) {
 	text-align: center;
 }
 
-tbody tr:nth-child(odd) {
-	background-color: rgb(185, 236, 253);
+.vip-category {
+	background-color: rgba(2, 134, 90, 0.815) !important;
+	border: none !important;
 }
 
-tbody tr:nth-child(even) {
-	background-color: rgb(213, 246, 252);
+.vip-services {
+	border: none !important;
+}
+
+.vip-services td {
+	background-color: rgba(69, 196, 143, 0.664);
+	border: 1px solid rgb(23, 187, 105) !important;
+	font-weight: bold;
+	color: white;
 }
 
 .btnRowDelete {
